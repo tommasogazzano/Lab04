@@ -56,6 +56,20 @@ class SpellChecker:
               "4. Exit\n" +
               "______________________________\n")
 
+    def handleSelezione(self, e):
+        if e is None:
+            print("No Language Selected")
+        else:
+            print(f"Language Selected {e}")
+
+    def handleCheck(self, e):
+        if e is None:
+            print("Nothing to check")
+        else:
+            self._view._sentence.value = f"Frase Inserita: {self._view._txtIn.value}"
+            (self._view._wrong.value, self._view._time.value) =self.handleSentence(self._view._txtIn.value, self._view._langSelector.value, self._view._mode.value)
+            self._view.page.update()
+
 
 def replaceChars(text):
     chars = "\\`*_{}[]()>#+-.!$?%^;,=_~"

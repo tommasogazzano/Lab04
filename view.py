@@ -3,6 +3,13 @@ import flet as ft
 class View(object):
     def __init__(self, page: ft.Page):
         # Page
+        self._time = None
+        self._wrong = None
+        self._mode = None
+        self._sentence = None
+        self._txtIn = None
+        self._spell = None
+        self._langSelector = None
         self.page = page
         self.page.title = "TdP 2024 - Lab 04 - SpellChecker ++"
         self.page.horizontal_alignment = 'CENTER'
@@ -27,8 +34,27 @@ class View(object):
         )
 
         # Add your stuff here
+        self._langSelector = ft.Dropdown(label="Select language", hint_text="Seleziona una Lingua", options=[ft.dropdown.Option("english"),
+                                                                                                     ft.dropdown.Option("spanish"),
+                                                                                                     ft.dropdown.Option("italian")],
+                                         on_change=self.__controller.handleSelezione)
 
-        self.page.add([])
+
+        def handleCheck(e):
+            self._sentence.value = f"{self._txtIn.value}!"
+            self.page.update()
+
+        self._txtIn = ft.TextField(label="Add your sentence here", disabled = False)
+        self._spell = ft.Button(text = "Spell Check", on_click=self.__controller.handleCheck, color="blue")
+        self._mode = ft.Dropdown(label = "Select Mode", options=[ft.dropdown.Option("Default"), ft.dropdown.Option("Linear"),
+                                                                 ft.dropdown.Option("Dichotomic")])
+        self._sentence = ft.Text()
+        self._wrong = ft.Text()
+        self._time = ft.Text()
+
+        row1 = ft.Row(controls = [self._mode, self._txtIn, self._spell])
+
+        self.page.add(self._langSelector, row1, self._sentence, self._wrong, self._time)
 
         self.page.update()
 
