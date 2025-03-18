@@ -3,6 +3,7 @@ import flet as ft
 class View(object):
     def __init__(self, page: ft.Page):
         # Page
+        self._lv = None
         self._time = None
         self._wrong = None
         self._mode = None
@@ -54,7 +55,13 @@ class View(object):
 
         row1 = ft.Row(controls = [self._mode, self._txtIn, self._spell])
 
-        self.page.add(self._langSelector, row1, self._sentence, self._wrong, self._time)
+        self._lv = ft.ListView(expand = 1, spacing = 10, padding = 20, auto_scroll = True)
+        self._lv.controls.append(self._sentence)
+        self._lv.controls.append(self._wrong)
+        self._lv.controls.append(self._time)
+
+
+        self.page.add(self._langSelector, row1, self._lv)
 
         self.page.update()
 
